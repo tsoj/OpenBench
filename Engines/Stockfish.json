@@ -1,7 +1,7 @@
 {
     "private" : false,
     "nps"     : 435000,
-    "source"  : "https://github.com/AndyGrant/Stockfish",
+    "source"  : "https://github.com/tsoj/Stockfish",
 
     "build" : {
         "path"      : "src",
