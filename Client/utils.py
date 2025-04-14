@@ -342,9 +342,16 @@ def download_public_engine(engine, net_path, branch, source, make_path, out_path
         make_cmd  = makefile_command(net_path, make_path, os.path.basename(out_path), compiler)
 
         # Build the engine, which will produce a binary to bin_path, to be moved after
-        process     = subprocess.Popen(make_cmd, cwd=make_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        comp_output = process.communicate()[0].decode('utf-8')
+        process = subprocess.Popen(make_cmd, cwd=make_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
+        could_be_stockfish = ("stockfish" in str(engine).lower()) or ("stockfish" in str(bin_path).lower())
+        if process.returncode and could_be_stockfish:
+
+            process = subprocess.Popen(["make", "-j", "profile-build", "ARCH=native"], cwd=make_path, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            if not process.returncode:
+                shutil.move(os.path.join(make_path, "stockfish"), bin_path)
+
+        comp_output = process.communicate()[0].decode('utf-8')
         # Verify that the compilation subprocess did not exit with errors
         if process.returncode:
             message = 'Error during compilation. The logs have been sent to the server'
