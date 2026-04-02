@@ -4,7 +4,7 @@
     "source"  : "https://github.com/tsoj/Nalwald",
 
     "build" : {
-        "path"      : "src",
+        "path"      : "",
         "compilers" : ["clang"],
         "cpuflags"  : [],
         "systems"   : ["Windows", "Linux"]
