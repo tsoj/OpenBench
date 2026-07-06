@@ -36,7 +36,7 @@ class Engine(Model):
 class Profile(Model):
 
     user     = ForeignKey(User, PROTECT, related_name='user')
-    games    = IntegerField(default=0)
+    games    = BigIntegerField(default=0)
     tests    = IntegerField(default=0)
     repos    = JSONField(default=dict, blank=True, null=True)
     engine   = CharField(max_length=128, blank=True)
@@ -97,6 +97,7 @@ class Test(Model):
     # Misc information
     author      = CharField(max_length=64)
     upload_pgns = CharField(max_length=16, default='FALSE')
+    info        = CharField(max_length=1024, default='', blank=True)
 
     # Opening book settings
     book_name  = CharField(max_length=32)
@@ -169,7 +170,6 @@ class Test(Model):
     finished    = BooleanField(default=False)
     deleted     = BooleanField(default=False)
     approved    = BooleanField(default=False)
-    awaiting    = BooleanField(default=False)
     error       = BooleanField(default=False)
 
     # Datetime house keeping for meta data
